@@ -16,7 +16,7 @@ export const resolvers = {
                 },
             },
     Mutation :{
-        crearClinete : (root,  {input}) => {
+        crearCliente : (root,  {input}) => {
                    const nuevoCliente = new Clinetes({
                     id: input.id,
                     nombre: input.nombre,
@@ -35,7 +35,7 @@ export const resolvers = {
                         }) ;
                    });
             },
-            actualizarClinete: (root,{input}) => {
+            actualizarCliente: (root,{input}) => {
                 return new Promise( (resolve , object ) => {               
                     Clinetes.findOneAndUpdate(
                          { _id : input.id} , input,

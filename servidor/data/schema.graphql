@@ -41,8 +41,8 @@ type Cliente {
       type Mutation {
           # datos del cliente para guardar 
           """ permite crear nuevos clientes  """ 
-             crearClinete (input: clienteInput ): Cliente
-             actualizarClinete (input: clienteInput ): Cliente
+             crearCliente (input: clienteInput ): Cliente
+             actualizarCliente (input: clienteInput ): Cliente
              eliminarCliente (id: ID! ): String
       }
       
