@@ -8,8 +8,8 @@ import {CLIENTES_QUERY} from '../queries/index';
 
 
 const Contacto = () => (
-<Query query={CLIENTES_QUERY}>
-  {({ loading ,error , data})=>{
+<Query query={CLIENTES_QUERY} pollInterval={1000}>
+  {({ loading ,error , data , startPolling , stopPolling})=>{
       if(loading) return "cargando ..";
       if(error) return `error ${error.message}`;
       console.log(data);

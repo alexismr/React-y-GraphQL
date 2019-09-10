@@ -22,7 +22,7 @@ export const resolvers = {
                     nombre: input.nombre,
                     apellido: input.apellido,
                     empresa: input.empresa,
-                    email: input.email,
+                    emails: input.emails,
                     tipo: input.tipo,
                     pedidos : input.pedidos
                    });

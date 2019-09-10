@@ -12,35 +12,90 @@ class NuevoCliente extends Component{
             empresa:'',
             email:'',
             tipo:''
-        }
+        },
+        error: false,
+        emails:[]
     }
 
+    nuevoCampo = () => {
+
+        this.setState({
+            emails: this.state.emails.concat([{email:''}])
+        })
+   
+    }
+
+    quitarCampo =i => ()=>{
+        this.setState({
+            emails: this.state.emails.filter((correo, index)=> i !== index )
+        })
+    }
+
+    leerCampo= i=> e=>{
+         
+        const nuevoEmail = this.state.emails.map((email, index)=> {
+             if(i !== index) return email;
+            return{
+                ...email,
+                email : e.target.value
+
+            }
+        })
+
+        this.setState({
+            emails: nuevoEmail
+        })
+
+    }
+
+
+
     render() {
+      const {error} = this.state;
+      let respuesta = (error) ? <p className="alert alert-danger p-3 text-center">
+          todos los campos son requeridos
+      </p>: '';
+
         return (
             <Fragment>
              <h2 className="text-center"> Nuevo cliente </h2>
+             {respuesta}
              <div className="row justify-content-center"> 
         
-          <Mutation  mutation={NUEVO_CLIENTE}   >
+          <Mutation  
+            mutation={NUEVO_CLIENTE} 
+            onCompleted={() => this.props.history.push('/')}
+          >
 
               {crearCliente => ( 
                 <form className="col-md-8 m-3" 
                 onSubmit ={
                     e=>{
                         e.preventDefault();
-                        const { nombre, apellido, empresa,email,tipo} = this.state.cliente;
+                        const { nombre, apellido, empresa,tipo} = this.state.cliente;
+
+                        const {emails} = this.state;
+
+                       if(nombre===''|| apellido===''|| empresa===''||tipo ==='' ){
+                           this.setState({
+                               error:true
+                           });
+                           return;
+                       }
+                       this.setState({
+                           error:false
+                         });
+
                         const input = {
                                 nombre,
                                 apellido,
                                 empresa,
-                                email,
+                                emails,
                                 tipo
                         };
                         crearCliente({
                             variables:{input} 
                         });
-
-                        
                     }
                 }
                 >
@@ -72,12 +127,11 @@ class NuevoCliente extends Component{
                                     }
                                 })
                             }}
-                            
                             />
                         </div>
                     </div>
                     <div className="form-row">
-                        <div className="form-group col-md-6">
+                        <div className="form-group col-md-12">
                             <label>Empresa</label>
                             <input type="text" className="form-control" placeholder="Empresa"
                                   onChange={e =>{
@@ -91,7 +145,46 @@ class NuevoCliente extends Component{
                             
                             />
                         </div>
-                        <div className="form-group col-md-6">
+                      
+                        { this.state.emails.map((input, index)=>(
+                            <div key={index} className="form-group col-md-12" >
+                                <label> Correo { index + 1}; </label>
+
+                                <div className="input-group"> 
+                                   <input
+                                    type="email" 
+                                    placeholder="correo"
+                                    className="form-control"
+                                    onChange={this.leerCampo(index)}
+                                     >
+
+                                   </input>
+                                
+                                    <div className="input-group-append">
+                                         <button
+                                            onClick={this.quitarCampo(index)}
+                                          type="button"
+                                          className="btn btn-danger"
+                                         >
+                                                     &times; Eliminar
+                                         </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )) }
+
+                      
+                      <div className="form-group d-flex justify-content-center col-md-12">
+                          <button type="button"
+                             className="btn btn-warning"
+                             onClick={this.nuevoCampo}
+                             >
+                                 + Agregar Email
+                             </button>
+                      </div>
+
+
+                        {/* <div className="form-group col-md-6">
                             <label>Email</label>
                             <input type="email" className="form-control" placeholder="Email" 
                             
@@ -105,7 +198,7 @@ class NuevoCliente extends Component{
                             }}
                             
                             />
-                        </div>
+                        </div> */}
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
