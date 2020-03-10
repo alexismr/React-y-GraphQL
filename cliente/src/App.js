@@ -21,13 +21,6 @@ const client = new ApolloClient({
     }
 
 });
- 
-
-
-() =>{
-  log("alexius")
-}
-
 
 
 
