@@ -11,4 +11,20 @@ export   const CLIENTES_QUERY = gql`{
 }`;
 
 
+export const CLIENTE_QUERY = gql`
+   query  consultarcliente($id:ID)
+    {
+      getCliente(id: $id)
+      {
+        nombre
+        apellido
+        empresa
+        tipo
+        emails{
+              email
+          }
+      }
+    }
+`;
+
 

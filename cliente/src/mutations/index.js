@@ -10,3 +10,19 @@ export const NUEVO_CLIENTE = gql`
         }
     }
 `;
+
+
+
+export const ACTUALIZAR_CLIENTE = gql`
+  
+  actualizarCliente(input : $input)
+  {
+    nombre
+    apellido
+    empresa
+    tipo
+    emails{
+      email
+    }
+  }
+`;
