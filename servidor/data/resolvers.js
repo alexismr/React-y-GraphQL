@@ -36,8 +36,6 @@ export const resolvers = {
                    });
             },
             actualizarCliente: (root,{input}) => {
-
-
                 return new Promise( (resolve , object ) => {               
                     Clinetes.findOneAndUpdate(
                          { _id : input.id} , input,
@@ -59,3 +57,4 @@ export const resolvers = {
 
     }
 }
+
